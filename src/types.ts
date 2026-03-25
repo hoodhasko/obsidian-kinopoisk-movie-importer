@@ -89,6 +89,8 @@ export interface FilmResponse {
 	completed: boolean | null;
 }
 
+export type WatchStatus = 'Не вышел' | 'Посмотрел' | 'Не смотрел';
+
 export interface MovieNote {
 	title: string;
 	webUrl: string;
@@ -98,4 +100,5 @@ export interface MovieNote {
 	imdb_rating: number | null;
 	year: number;
 	posterUrl: string;
+	watchStatus: WatchStatus;
 }

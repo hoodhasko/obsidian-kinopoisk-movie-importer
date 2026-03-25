@@ -10,5 +10,6 @@ export function mapToMovieNote(data: FilmResponse): MovieNote {
 		imdb_rating: data.ratingImdb,
 		year: data.year || 0,
 		posterUrl: data.posterUrlPreview || data.posterUrl,
+		watchStatus: 'Не смотрел',
 	};
 }
