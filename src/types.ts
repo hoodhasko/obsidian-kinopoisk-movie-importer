@@ -97,4 +97,5 @@ export interface MovieNote {
 	kp_rating: number | null;
 	imdb_rating: number | null;
 	year: number;
+	posterUrl: string;
 }

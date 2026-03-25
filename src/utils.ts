@@ -9,5 +9,6 @@ export function mapToMovieNote(data: FilmResponse): MovieNote {
 		kp_rating: data.ratingKinopoisk,
 		imdb_rating: data.ratingImdb,
 		year: data.year || 0,
+		posterUrl: data.posterUrlPreview || data.posterUrl,
 	};
 }

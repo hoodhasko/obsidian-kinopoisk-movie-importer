@@ -117,7 +117,7 @@ export default class MoviePlugin extends Plugin {
 
 	// 📝 Создание заметки
 	async createMovieNote(data: MovieNote) {
-		const {title, webUrl, nameOriginal, genres, kp_rating, imdb_rating, year} = data;
+		const {title, webUrl, nameOriginal, genres, kp_rating, imdb_rating, year, posterUrl} = data;
 
 		const safeTitle = this.sanitizeFileName(title);
 
@@ -130,6 +130,7 @@ genres: [${genres.join(', ')}]
 kp_rating: ${kp_rating || ''}
 imdb_rating: ${imdb_rating || ''}
 year: ${year}
+posterUrl: ${posterUrl}
 ---
 
 # ${title}
