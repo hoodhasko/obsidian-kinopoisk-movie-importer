@@ -10,7 +10,7 @@ class InputModal extends Modal {
 	constructor(app: App, onSubmit: (result: string) => void) {
 		super(app);
 		this.onSubmit = onSubmit;
-		this.result = 'https://www.kinopoisk.ru/film/5582128/';
+		this.result = '';
 	}
 
 	onOpen() {
@@ -19,7 +19,6 @@ class InputModal extends Modal {
 
 		const input = contentEl.createEl('input', {
 			type: 'text',
-			value: 'https://www.kinopoisk.ru/film/5582128/',
 			attr: {placeholder: 'https://www.kinopoisk.ru/film/...'},
 		});
 		input.style.width = '100%';
@@ -117,7 +116,17 @@ export default class MoviePlugin extends Plugin {
 
 	// 📝 Создание заметки
 	async createMovieNote(data: MovieNote) {
-		const {title, webUrl, nameOriginal, genres, kp_rating, imdb_rating, year, posterUrl, watchStatus} = data;
+		const {
+			title,
+			webUrl,
+			nameOriginal,
+			genres,
+			kp_rating,
+			imdb_rating,
+			year,
+			posterUrl,
+			watchStatus,
+		} = data;
 
 		const safeTitle = this.sanitizeFileName(title);
 
