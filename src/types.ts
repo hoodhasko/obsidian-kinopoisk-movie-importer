@@ -88,3 +88,13 @@ export interface FilmResponse {
 	shortFilm: boolean | null;
 	completed: boolean | null;
 }
+
+export interface MovieNote {
+	title: string;
+	webUrl: string;
+	nameOriginal: string | null;
+	genres: string[];
+	kp_rating: number | null;
+	imdb_rating: number | null;
+	year: number;
+}

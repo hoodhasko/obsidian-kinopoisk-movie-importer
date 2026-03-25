@@ -1,6 +1,7 @@
 import {Plugin, Notice, Modal, App} from 'obsidian';
 import {MyPluginSettings, DEFAULT_SETTINGS} from './settings';
-import {FilmResponse} from 'types';
+import {FilmResponse, MovieNote} from 'types';
+import {mapToMovieNote} from 'utils';
 
 class InputModal extends Modal {
 	private result: string;
@@ -72,7 +73,8 @@ export default class MoviePlugin extends Plugin {
 
 					try {
 						const data = await this.fetchMovie(id);
-						await this.createMovieNote(data);
+						const movieNote = mapToMovieNote(data);
+						await this.createMovieNote(movieNote);
 
 						new Notice('✅ Фильм добавлен!');
 					} catch (e) {
@@ -114,27 +116,23 @@ export default class MoviePlugin extends Plugin {
 	}
 
 	// 📝 Создание заметки
-	async createMovieNote(data: any) {
-		const title = data.nameOriginal || data.nameRu || 'Unknown';
-		const year = data.year || '';
-		const genres = (data.genres || []).map((g: any) => g.genre);
+	async createMovieNote(data: MovieNote) {
+		const {title, webUrl, nameOriginal, genres, kp_rating, imdb_rating, year} = data;
 
 		const safeTitle = this.sanitizeFileName(title);
 
 		const content = `---
 type: movie
 title: ${title}
-year: ${year}
+webUrl: ${webUrl}
+nameOriginal: ${nameOriginal || ''}
 genres: [${genres.join(', ')}]
-kp_rating: ${data.ratingKinopoisk || ''}
-imdb_rating: ${data.ratingImdb || ''}
-kp_url: https://www.kinopoisk.ru/film/${data.kinopoiskId}/
+kp_rating: ${kp_rating || ''}
+imdb_rating: ${imdb_rating || ''}
+year: ${year}
 ---
 
 # ${title}
-
-## Описание
-${data.description || 'Нет описания'}
 `;
 
 		const folder = 'Movies';
