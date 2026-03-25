@@ -91,6 +91,8 @@ export interface FilmResponse {
 
 export type WatchStatus = 'Не вышел' | 'Посмотрел' | 'Не смотрел';
 
+export type ContentType = 'фильм' | 'сериал';
+
 export interface MovieNote {
 	title: string;
 	webUrl: string;
@@ -101,4 +103,5 @@ export interface MovieNote {
 	year: number;
 	posterUrl: string;
 	watchStatus: WatchStatus;
+	type: ContentType;
 }

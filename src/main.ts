@@ -92,8 +92,12 @@ export default class MoviePlugin extends Plugin {
 
 	// 🔍 Извлечение ID из ссылки
 	extractId(url: string): string | null {
-		const match = url.match(/film\/(\d+)/);
-		return match && match[1] ? match[1] : null;
+		const match = url.match(/(film|series)\/(\d+)/);
+		if (match && match[2]) {
+			return match[2];
+		}
+		const idMatch = url.match(/^(\d+)$/);
+		return idMatch && idMatch[1] ? idMatch[1] : null;
 	}
 
 	// 🌐 Запрос к API Кинопоиска
@@ -116,31 +120,32 @@ export default class MoviePlugin extends Plugin {
 
 	// 📝 Создание заметки
 	async createMovieNote(data: MovieNote) {
-		const {
-			title,
-			webUrl,
-			nameOriginal,
-			genres,
-			kinopoiskRating,
-			imdbRating,
-			year,
-			posterUrl,
-			watchStatus,
-		} = data;
+	const {
+		title,
+		webUrl,
+		nameOriginal,
+		genres,
+		kinopoiskRating,
+		imdbRating,
+		year,
+		posterUrl,
+		watchStatus,
+		type,
+	} = data;
 
 		const safeTitle = this.sanitizeFileName(title);
 
 		const content = `---
-type: movie
+type: "${type}"
 title: "${title}"
 webUrl: ${webUrl}
 nameOriginal: "${nameOriginal || ''}"
-genres: [${genres.join(', ')}]
+genres: [${genres.map(g => `"${g}"`).join(', ')}]
 kinopoiskRating: ${kinopoiskRating || ''}
 imdbRating: ${imdbRating || ''}
 year: ${year}
 posterUrl: ${posterUrl}
-watchStatus: ${watchStatus}
+watchStatus: "${watchStatus}"
 ---
 
 # ${title}
@@ -148,17 +153,17 @@ watchStatus: ${watchStatus}
 
 		const folder = 'Movies';
 
-		// создаём папку если нет
-		if (!this.app.vault.getAbstractFileByPath(folder)) {
-			await this.app.vault.createFolder(folder);
-		}
-
 		const filePath = `${folder}/${safeTitle}.md`;
 
-		// проверка на дубликат
-		if (this.app.vault.getAbstractFileByPath(filePath)) {
-			new Notice('⚠️ Фильм уже существует');
+		const existingFile = this.app.vault.getAbstractFileByPath(filePath);
+		if (existingFile) {
+			new Notice(`⚠️ Фильм уже существует: ${filePath}`);
 			return;
+		}
+
+		const folderFile = this.app.vault.getAbstractFileByPath(folder);
+		if (!folderFile) {
+			await this.app.vault.createFolder(folder);
 		}
 
 		await this.app.vault.create(filePath, content);
