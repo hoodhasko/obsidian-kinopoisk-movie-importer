@@ -102,7 +102,7 @@ export default class MoviePlugin extends Plugin {
 			`https://kinopoiskapiunofficial.tech/api/v2.2/films/${id}`,
 			{
 				headers: {
-					'X-API-KEY': '164e96ba-8845-464d-930f-2e266b96ff88', // ← вставь сюда ключ
+					'X-API-KEY': '164e96ba-8845-464d-930f-2e266b96ff88',
 				},
 			},
 		);
@@ -121,8 +121,8 @@ export default class MoviePlugin extends Plugin {
 			webUrl,
 			nameOriginal,
 			genres,
-			kp_rating,
-			imdb_rating,
+			kinopoiskRating,
+			imdbRating,
 			year,
 			posterUrl,
 			watchStatus,
@@ -132,12 +132,12 @@ export default class MoviePlugin extends Plugin {
 
 		const content = `---
 type: movie
-title: ${title}
+title: "${title}"
 webUrl: ${webUrl}
-nameOriginal: ${nameOriginal || ''}
+nameOriginal: "${nameOriginal || ''}"
 genres: [${genres.join(', ')}]
-kp_rating: ${kp_rating || ''}
-imdb_rating: ${imdb_rating || ''}
+kinopoiskRating: ${kinopoiskRating || ''}
+imdbRating: ${imdbRating || ''}
 year: ${year}
 posterUrl: ${posterUrl}
 watchStatus: ${watchStatus}

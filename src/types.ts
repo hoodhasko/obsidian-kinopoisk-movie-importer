@@ -96,8 +96,8 @@ export interface MovieNote {
 	webUrl: string;
 	nameOriginal: string | null;
 	genres: string[];
-	kp_rating: number | null;
-	imdb_rating: number | null;
+	kinopoiskRating: number | null;
+	imdbRating: number | null;
 	year: number;
 	posterUrl: string;
 	watchStatus: WatchStatus;
