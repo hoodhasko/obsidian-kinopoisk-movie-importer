@@ -1,0 +1,11 @@
+{
+	"id": "movie-plugin",
+  	"name": "Movie Importer",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Import movies from Kinopoisk",
+	"author": "dopitito",
+	"authorUrl": "https://obsidian.md",
+	"fundingUrl": "https://obsidian.md/pricing",
+	"isDesktopOnly": false
+}
